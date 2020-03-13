@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yorkismine.fragemnt.model.Note
 
 class NoteAdapter(
-    private val list: MutableList<Note>
+     var list: MutableList<Note>
 ) : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
 
     fun addNote(note: Note){
