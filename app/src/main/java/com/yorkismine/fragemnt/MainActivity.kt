@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val fragment1 = FirstFragment()
-        fragment2 = SecondFragment()
-
-        if (supportFragmentManager.backStackEntryCount != 0) {
-            fragment2 = supportFragmentManager.findFragmentByTag(fragmentTag) as SecondFragment
+        fragment2 = if (supportFragmentManager.backStackEntryCount != 0) {
+            (supportFragmentManager.findFragmentByTag(fragmentTag) as SecondFragment?) ?: SecondFragment()
+        } else {
+            SecondFragment()
         }
 
         presenter = MainPresenter(fragment1, fragment2)

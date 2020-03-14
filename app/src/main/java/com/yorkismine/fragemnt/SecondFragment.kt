@@ -16,12 +16,17 @@ class SecondFragment : Fragment(), SecondView {
 
     private lateinit var adapter: NoteAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = NoteAdapter(supplyNotes())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        retainInstance = true
 
         Log.d("TESTING", "onCreateView()")
 
@@ -29,11 +34,6 @@ class SecondFragment : Fragment(), SecondView {
         val view = inflater.inflate(R.layout.fragment_second, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler)
-        adapter = NoteAdapter(supplyNotes())
-        if (savedInstanceState != null) {
-            val list: ArrayList<Note> = savedInstanceState.getParcelableArrayList("list")!!
-            adapter.list = list
-        }
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
@@ -53,11 +53,9 @@ class SecondFragment : Fragment(), SecondView {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
 
-        val list: ArrayList<Note> = adapter.list as ArrayList<Note>
-        outState.putParcelableArrayList("list", list)
-    }
+}
 
+fun Any.info(message: String) {
+    Log.i(this::class.java.simpleName, message)
 }
